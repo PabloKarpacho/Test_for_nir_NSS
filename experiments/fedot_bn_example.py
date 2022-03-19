@@ -1,6 +1,8 @@
 import sys
 from typing import Optional, Union, List
 
+from fedot.core.dag.graph import Graph
+
 parentdir = 'C:\\Users\\Worker1\\Documents\\BAMT'
 sys.path.insert(0, parentdir)
  
@@ -31,11 +33,11 @@ from pgmpy.estimators import K2Score
 
 
 # кастомный граф
-class CustomGraphModel(OptGraph):
+# TODO find out Graph or OptGraph need to use
+class CustomGraphModel(Graph):
 
-    def __init__(self, nodes: Optional[Union[OptNode, List[OptNode]]] = None,
-                 log: Log = None):
-        super().__init__(nodes, log)
+    def __init__(self, nodes: Optional[Union[OptNode, List[OptNode]]] = None):
+        super().__init__(nodes)
         # TODO find out is this field necessary or not - fix it
         self.unique_pipeline_id = 1
 
