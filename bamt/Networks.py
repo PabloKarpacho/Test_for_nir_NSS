@@ -644,10 +644,10 @@ class BaseNetwork(object):
       my = []
       true = []
 
-      for item in self.shd_list_of_list_maker[0]:
+      for item in true_structure[0]:
         true.append(''.join(item))
 
-      for item in self.shd_list_of_list_maker[1]:
+      for item in true_structure[1]:
         my.append(''.join(item))
   
       df_my['name'] = my
