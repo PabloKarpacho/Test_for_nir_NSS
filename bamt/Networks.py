@@ -630,7 +630,8 @@ class BaseNetwork(object):
         return network.show(f'visualization_result/' + output)
       
     def shd(self, true_structure, discretized_data: pd.DataFrame):
-      weights = self.calculate_weights(discretized_data).weights
+      self.calculate_weights(discretized_data)
+      weights = self.weights
       weights_pd = pd.DataFrame.from_dict(weights, orient='index', columns=[
             'weights'])  # Переводим словарь в датафрем пандаса для удобной работы
       weights_pd.reset_index(inplace=True)  # Удаляем и делаем красивый индекс
