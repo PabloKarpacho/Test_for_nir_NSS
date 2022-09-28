@@ -629,25 +629,32 @@ class BaseNetwork(object):
 
         return network.show(f'visualization_result/' + output)
       
-    def shd(self, true_structure, discretized_data: pd.DataFrame):
-      self.calculate_weights(discretized_data)
-      weights = self.weights
-      weights_pd = pd.DataFrame.from_dict(weights, orient='index', columns=[
-            'weights'])  # Переводим словарь в датафрем пандаса для удобной работы
-      weights_pd.reset_index(inplace=True)  # Удаляем и делаем красивый индекс
-      weights_pd.sort_values(by='index', inplace=True, ignore_index=True)  # Сортируем значен
-      parent = []  # Создаём переменную для записи родителей
-      successor = []  # Создаем переменную для записи наследников
-      for item in weights_pd['index']:  # Пробегаемся по столбцу ии вытаскиваем из кортежей имена узлов
-        parent.append(item[0])
-        successor.append(item[1])
-      weights_pd['parent'] = parent  # Создаём столбцы с именами родителей и наследников
-      weights_pd['successor'] = successor
-      true_merged = true_structure.merge(weights_pd,
-                                           how='inner')  # Объединяем 2 датафрема: наш граф и граф эталона выделяя только совпадающие связи
-      shd = len(weights_pd['parent']) + len(true_structure['parent']) - len(true_merged[
-                                                                        'parent'])  # Считаем shd складывая количество связей в нашем и эталонном графе и вычитая то, что совпало
+    def shd_list_of_list_maker(self,true_graph_path: str):
+      array = []
+      with open(true_graph_path, encoding="UTF-8") as file:
+        data = [list(map(str, line.split())) for line in file]
+      array.append(data)
+      array.append(self.edges)
+      
+      return(array)
+      
+    def shd(self, true_structure: list):
+      df_my = pd.DataFrame()
+      df_true = pd.DataFrame()
+      my = []
+      true = []
 
+      for item in self.shd_list_of_list_maker[0]:
+        true.append(''.join(item))
+
+      for item in self.shd_list_of_list_maker[1]:
+        my.append(''.join(item))
+  
+      df_my['name'] = my
+      df_true['name'] = true
+      df_merged = df_true.merge(df_my, how='inner')
+      shd = len(df_my['name']) + len(df_true['name']) - len(df_merged['name']) #Считаем shd складывая количество связей в нашем и эталонном графе и вычитая то, что совпало 
+      
       return (shd)
 
 
