@@ -630,12 +630,9 @@ class BaseNetwork(object):
         return network.show(f'visualization_result/' + output)
       
     def shd_list_of_list_maker(self,true_graph_path: str):
-      array = []
       with open(true_graph_path, encoding="UTF-8") as file:
         data = [list(map(str, line.split())) for line in file]
-      array.append(data)
-      array.append(self.edges)
-      
+        
       return(array)
       
     def shd(self, true_structure: list):
@@ -644,10 +641,10 @@ class BaseNetwork(object):
       my = []
       true = []
 
-      for item in true_structure[0]:
+      for item in true_structure:
         true.append(''.join(item))
 
-      for item in true_structure[1]:
+      for item in self.edges:
         my.append(''.join(item))
   
       df_my['name'] = my
