@@ -650,7 +650,7 @@ class BaseNetwork(object):
       df_my['name'] = my
       df_true['name'] = true
       df_merged = df_true.merge(df_my, how='inner')
-      shd = len(df_my['name']) + len(df_true['name']) - len(df_merged['name']) #Считаем shd складывая количество связей в нашем и эталонном графе и вычитая то, что совпало 
+      shd = len(df_my['name']) + len(df_true['name']) - 2 * len(df_merged['name']) #Считаем shd складывая количество связей в нашем и эталонном графе и вычитая то, что совпало 
       
       return (shd)
 
