@@ -633,7 +633,7 @@ class BaseNetwork(object):
       with open(true_graph_path, encoding="UTF-8") as file:
         data = [list(map(str, line.split())) for line in file]
         
-      return(array)
+      return(data)
       
     def shd(self, true_structure: list):
       df_my = pd.DataFrame()
