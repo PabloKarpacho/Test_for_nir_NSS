@@ -509,16 +509,15 @@ class BaseNetwork(object):
                     test_row = dict(test.iloc[i, :])
                     for n, key in enumerate(columns):
                         try:
-                            sample = bn.sample(
-                                1, evidence=test_row, predict=True)
-                            if bn.descriptor['types'][key] == 'cont':
-                                if (bn.descriptor['signs'][key] == 'pos') & (sample.loc[0, key] < 0):
-                                    # preds[key].append(np.nan)
-                                    preds[key].append(0)
-                                else:
-                                    preds[key].append(sample.loc[0, key])
-                            else:
-                                preds[key].append(sample.loc[0, key])
+                            sample = bn.sample(1, evidence=test_row, predict=True)
+                            # if bn.descriptor['types'][key] == 'cont':
+                            #     # if (bn.descriptor['signs'][key] == 'pos') & (sample.loc[0, key] < 0):
+                            #     #     # preds[key].append(np.nan)
+                            #     #     preds[key].append(0)
+                            #     # else:
+                            #     preds[key].append(sample.loc[0, key])
+                            # else:
+                            preds[key].append(sample.loc[0, key])
                         except Exception as ex:
                             logger_network.error(ex)
                             preds[key].append(np.nan)
